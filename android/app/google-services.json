@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "152280502218",
+    "project_id": "mozchatapp",
+    "storage_bucket": "mozchatapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152280502218:android:4abb33cc57239746e9c933",
+        "android_client_info": {
+          "package_name": "com.example.moz_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG0rubgCUB3PwAY7ZyGM48WuA4xQo0yF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
