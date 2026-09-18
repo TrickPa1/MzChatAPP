@@ -1,0 +1,30 @@
+name: Build iOS (Sem Assinatura, versao teste)
+
+on:
+  workflow_dispatch: # Permite rodar manualmente
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.24.5' # Você pode mudar para a versão que usa
+
+      - name: Instalar dependências
+        run: flutter pub get
+
+      - name: Build do iOS (sem assinar)
+        run: flutter build ipa --release --no-codesign
+
+      - name: Upload do IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build
+          path: build/ios/ipa/*.ipa
