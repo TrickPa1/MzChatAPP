@@ -58,18 +58,19 @@ class RegisterPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //logo
-            Icon(Icons.message,
-              size: 60,
-              color: Theme.of(context).colorScheme.tertiary,
+            Image.asset('assets/icon/icon.png',
+              width: 60,
+              height: 60,
+              fit: BoxFit.cover,
             ),
 
             const SizedBox(height: 50),
 
             // welcome back message
-            Text("Vamos criar sua conta",
+            Text("Vamos criar sua conta!!",
               style: TextStyle(
                 fontSize: 16,
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
             ),
 

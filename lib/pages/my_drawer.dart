@@ -21,11 +21,11 @@ class MyDrawer extends StatelessWidget {
             //logo
             DrawerHeader(
               child: Center(
-                child: Icon(
-                  Icons.message,
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 40,
-                ),
+                child: Image.asset('assets/icon/icon.png',
+              width: 40,
+              height: 40,
+              fit: BoxFit.cover,
+            ),
               ),
             ),
 
