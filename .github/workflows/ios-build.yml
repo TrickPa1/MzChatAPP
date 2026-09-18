@@ -1,7 +1,7 @@
 name: Build iOS (Sem Assinatura, versao teste)
 
 on:
-  workflow_dispatch: # Permite rodar manualmente
+  workflow_dispatch:
 
 jobs:
   build:
@@ -15,7 +15,10 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.24.5' # Você pode mudar para a versão que usa
+          # Remove a versão fixa para pegar a mais recente
+
+      - name: Verificar versão do Flutter
+        run: flutter --version
 
       - name: Instalar dependências
         run: flutter pub get
