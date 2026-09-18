@@ -1,4 +1,4 @@
-name: Build iOS (Sem Assinatura, versao teste)
+name: Build iOS (Sem Assinatura)
 
 on:
   workflow_dispatch:
@@ -15,7 +15,6 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          # Remove a versão fixa para pegar a mais recente
 
       - name: Verificar versão do Flutter
         run: flutter --version
@@ -23,11 +22,19 @@ jobs:
       - name: Instalar dependências
         run: flutter pub get
 
-      - name: Build do iOS (sem assinar)
-        run: flutter build ipa --release --no-codesign
+      - name: Build iOS (sem assinar)
+        run: flutter build ios --release --no-codesign
+
+      - name: Criar arquivo IPA
+        run: |
+          cd build/ios/iphoneos
+          mkdir Payload
+          cp -r Runner.app Payload/
+          zip -r ../Runner.ipa Payload
+          cd ../..
 
       - name: Upload do IPA
         uses: actions/upload-artifact@v4
         with:
           name: ios-build
-          path: build/ios/ipa/*.ipa
+          path: build/ios/Runner.ipa
