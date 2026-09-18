@@ -1,4 +1,4 @@
-name: Build iOS (Sem Assinatura)
+name: MozChatAPP (Build simples sem assinatura)
 
 on:
   workflow_dispatch:
@@ -22,16 +22,22 @@ jobs:
       - name: Instalar dependências
         run: flutter pub get
 
+      - name: Remover exigência de Development Team
+        run: |
+          # Remove a necessidade de Team ID
+          sed -i '' 's/DEVELOPMENT_TEAM = .*;/DEVELOPMENT_TEAM = "";/g' ios/Runner.xcodeproj/project.pbxproj || true
+          sed -i '' 's/"DEVELOPMENT_TEAM\[sdk=iphoneos\*\]" = .*;/"DEVELOPMENT_TEAM[sdk=iphoneos*]" = "";/g' ios/Runner.xcodeproj/project.pbxproj || true
+
       - name: Build iOS (sem assinar)
         run: flutter build ios --release --no-codesign
 
       - name: Criar arquivo IPA
         run: |
           cd build/ios/iphoneos
-          mkdir Payload
+          mkdir -p Payload
           cp -r Runner.app Payload/
           zip -r ../Runner.ipa Payload
-          cd ../..
+          ls -la ../Runner.ipa
 
       - name: Upload do IPA
         uses: actions/upload-artifact@v4
