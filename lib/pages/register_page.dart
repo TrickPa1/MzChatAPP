@@ -20,36 +20,47 @@ class RegisterPage extends StatelessWidget {
 
   // meteodo para registrar
   void register(BuildContext context){
+
     //obter servicos de autenticação
     final _auth = AuthService();
     
-    // se as palavras passes forem iguais 
-    if(_pwController.text == _confirmPwController.text){
-      try{
-        _auth.signUpwithEmailPassword(
-          _emailController.text, 
-          _pwController.text,
-          _nameController.text,
-        );
-      }catch (e) {
+    // se os inputs estiverem vazios
+    if(_emailController.text.isNotEmpty 
+        && _nameController.text.isNotEmpty 
+        && _pwController.text.isNotEmpty
+        && _confirmPwController.text.isNotEmpty
+      ){
+
+        // se as palavras passes forem iguais 
+      if(_pwController.text == _confirmPwController.text){
+        try{
+          _auth.signUpwithEmailPassword(
+            _emailController.text, 
+            _pwController.text,
+            _nameController.text,
+          );
+        }catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(e.toString())),
+          );
+        }
+      }
+
+      // se as palavras passes nao forem iguais, mostrar erro
+      else{
         showDialog(
           context: context,
-          builder:  (context) => AlertDialog(
-            title: Text(e.toString()),
-          ),
+          builder: (context) => const AlertDialog(
+            title: Text("Senhas Diferentes!!"),
+          )
         );
       }
-    }
-
-    // se as palavras passes nao forem iguais, mostrar erro
-    else{
-      showDialog(
-        context: context,
-        builder: (context) => const AlertDialog(
-          title: Text("Senhas Diferentes!!"),
-        )
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Por Favor preencha todos os campos!!')),
       );
     }
+    
   }
   
   @override

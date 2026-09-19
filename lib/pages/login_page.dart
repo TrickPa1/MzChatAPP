@@ -14,11 +14,12 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({super.key, required this.onTap});
 
+  // servicos de autenticação
+  final authService = AuthService();
+
   //metodo para login
   void login(BuildContext context) async{
-    // servicos de autenticação
-    final authService = AuthService();
-
+    
     // try login
     try{
       await authService.signInWithEmailPassword(_emailController.text, _pwController.text);
@@ -26,12 +27,50 @@ class LoginPage extends StatelessWidget {
 
     // encontrar erros
     catch (e) {
-      showDialog(context: context, 
-      builder: (context) => AlertDialog(
-        title: Text(e.toString()),
-      ),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
       );
     }
+  }
+
+  //esqueceu senha
+  void openForgotPasswordBox(BuildContext context) async{
+    showDialog(
+      context: context, 
+      builder: (context) => AlertDialog(
+        title: Text("Esqueceu a Senha?"),
+        content: MyTextFields(
+          hintText: "Digite o email..", 
+          obscureText: false, 
+          controller: _emailController
+        ),
+        actions: [
+          // botao para cancelar
+          TextButton(
+            onPressed: () => Navigator.pop(context), 
+            child: const Text("Cancelar"),
+          ),
+
+          // batao para Recuperar
+          TextButton(
+            onPressed: () async {
+              String message = 
+                await authService.forgotPassword(_emailController.text);
+              
+              if(message == "Email de recuperação da senha enviado! Verifique sua caixa electronica") {
+                Navigator.pop(context);
+                _emailController.clear();
+              }
+
+              ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(message)));
+            }, 
+            child: const Text("Recuperar Conta")
+          ),
+
+        ],
+      ),
+    );
   }
 
 
@@ -87,6 +126,28 @@ class LoginPage extends StatelessWidget {
               obscureText:true,
               controller: _pwController,
               icon: Icon(Icons.lock_outline),
+            ),
+
+            const SizedBox(height: 8),
+
+            // esqueceu senha
+            GestureDetector(
+              onTap: () => openForgotPasswordBox(context),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Esqueceu Senha?",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
 
             const SizedBox(height: 25),

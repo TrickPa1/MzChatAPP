@@ -66,6 +66,16 @@ class AuthService {
     return await _auth.signOut();
   }
 
+  //esqueceu senha
+  Future<String> forgotPassword(String email) async{
+    try{
+      await _auth.sendPasswordResetEmail(email: email);
+      return "Email de recuperação da senha enviado! Verifique sua caixa electronica";
+    }catch(e) {
+      return "Aconteceu um erro: $e";
+    }
+  }
+  
  //Erros
  
 }

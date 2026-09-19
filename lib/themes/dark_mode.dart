@@ -7,7 +7,7 @@ ThemeData darkMode = ThemeData(
     primary: Colors.grey.shade600,
     secondary: Colors.grey.shade700,
     tertiary: Colors.white,
-    inversePrimary: Colors.black87,
+    inversePrimary: Color.fromARGB(255, 25, 25, 25),
   ),
   textTheme: GoogleFonts.montserratTextTheme(
     ThemeData.dark().textTheme
