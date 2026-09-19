@@ -8,11 +8,13 @@ import '../services/chat/chat_service.dart';
 class ChatPage extends StatefulWidget {
   final String receiverEmail;
   final String receiverID;
+  final String receiverName;
   
   ChatPage({
     super.key,
     required this.receiverEmail,
     required this.receiverID,
+    required this.receiverName,
   });
 
   @override
@@ -92,7 +94,7 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Text(widget.receiverEmail),
+        title: Text(widget.receiverName),
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.grey,
         elevation: 0,

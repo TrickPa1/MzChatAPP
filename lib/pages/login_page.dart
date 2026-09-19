@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:moz_chat/services/auth/auth_service.dart';
 import 'package:moz_chat/components/my_buttons.dart';
 import 'package:moz_chat/components/my_textfields.dart';
@@ -43,16 +44,25 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //logo
-            Image.asset('assets/icon/icon.png',
-              width: 60,
-              height: 60,
+            Lottie.asset('assets/lotties/Login.json',
+              width: 300,
+              height: 300,
               fit: BoxFit.cover,
+              repeat: true,
+              animate: true,
             ),
 
-            const SizedBox(height: 50),
+            const SizedBox(height: 25),
 
             // welcome back message
             Text("Bem-Vindo de Volta!",
+              style: TextStyle(
+                fontSize: 26,
+                color: Theme.of(context).colorScheme.tertiary,
+              ),
+            ),
+
+            Text("Faça Login para acessar a sua conta",
               style: TextStyle(
                 fontSize: 16,
                 color: Theme.of(context).colorScheme.tertiary,
@@ -66,6 +76,7 @@ class LoginPage extends StatelessWidget {
               hintText: "Email",
               obscureText: false,
               controller: _emailController,
+              icon: Icon(Icons.email_outlined),
             ),
             
             const SizedBox(height: 10),
@@ -75,6 +86,7 @@ class LoginPage extends StatelessWidget {
               hintText: "Senha",
               obscureText:true,
               controller: _pwController,
+              icon: Icon(Icons.lock_outline),
             ),
 
             const SizedBox(height: 25),

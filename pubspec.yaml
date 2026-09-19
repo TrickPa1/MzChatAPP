@@ -14,6 +14,7 @@ dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.14.4
   google_fonts: ^8.2.1
+  lottie: ^3.6.1
   provider: ^6.1.5+1
 
 dev_dependencies:
@@ -25,6 +26,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icon/
+    - assets/lotties/
 
 flutter_launcher_icons:
   android: true

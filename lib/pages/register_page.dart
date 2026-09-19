@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:moz_chat/services/auth/auth_service.dart';
 import 'package:moz_chat/components/my_buttons.dart';
 import 'package:moz_chat/components/my_textfields.dart';
 
 class RegisterPage extends StatelessWidget {
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
   final TextEditingController _confirmPwController = TextEditingController();
@@ -26,7 +28,8 @@ class RegisterPage extends StatelessWidget {
       try{
         _auth.signUpwithEmailPassword(
           _emailController.text, 
-          _pwController.text
+          _pwController.text,
+          _nameController.text,
         );
       }catch (e) {
         showDialog(
@@ -58,13 +61,15 @@ class RegisterPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //logo
-            Image.asset('assets/icon/icon.png',
-              width: 60,
-              height: 60,
+            Lottie.asset('assets/lotties/regist.json',
+              width: 300,
+              height: 300,
               fit: BoxFit.cover,
+              repeat: true,
+              animate: true,
             ),
 
-            const SizedBox(height: 50),
+            const SizedBox(height: 25),
 
             // welcome back message
             Text("Vamos criar sua conta!!",
@@ -76,11 +81,22 @@ class RegisterPage extends StatelessWidget {
 
             const SizedBox(height: 25),
 
+            //name textfield
+            MyTextFields(
+              hintText: "Nome",
+              obscureText: false,
+              controller: _nameController,
+              icon: Icon(Icons.person_outline),
+            ),
+
+            const SizedBox(height: 10,),
+
             // email textfield
             MyTextFields(
               hintText: "Email",
               obscureText: false,
               controller: _emailController,
+              icon: Icon(Icons.email_outlined),
             ),
             
             const SizedBox(height: 10),
@@ -90,6 +106,7 @@ class RegisterPage extends StatelessWidget {
               hintText: "Senha",
               obscureText:true,
               controller: _pwController,
+              icon: Icon(Icons.lock_outline),
             ),
 
             const SizedBox(height: 10),
@@ -99,6 +116,7 @@ class RegisterPage extends StatelessWidget {
               hintText: "Confirmar Senha",
               obscureText:true,
               controller: _confirmPwController,
+              icon: Icon(Icons.lock_reset),
             ),
 
             const SizedBox(height: 25),
