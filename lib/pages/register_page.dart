@@ -73,8 +73,8 @@ class RegisterPage extends StatelessWidget {
           children: [
             //logo
             Lottie.asset('assets/lotties/regist.json',
-              width: 300,
-              height: 300,
+              width: 200,
+              height: 200,
               fit: BoxFit.cover,
               repeat: true,
               animate: true,

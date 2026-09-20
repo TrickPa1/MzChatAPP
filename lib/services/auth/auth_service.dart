@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 
 class AuthService {
 
@@ -75,7 +77,45 @@ class AuthService {
       return "Aconteceu um erro: $e";
     }
   }
-  
+
+  //github
+  Future<UserCredential> signInWithGitHub() async {
+    try{
+
+      // cria provider do github
+      GithubAuthProvider githubProvider = GithubAuthProvider();
+
+      // faz login com o provider
+      UserCredential userCredential;
+      if (kIsWeb) {
+       // No Web usa popup
+        userCredential = await _auth.signInWithPopup(githubProvider);
+      } else {
+        // No mobile usa o provider normal
+        userCredential = await _auth.signInWithProvider(githubProvider);
+      }
+
+      //salva as informações do utilizador
+      final user = userCredential.user!;
+      await _firestore.collection("Users").doc(user.uid).set(
+        {
+          'uid': user.uid,
+          'email': user.email ?? '',
+          'name':user.displayName?.isNotEmpty == true 
+          ? user.displayName! : 'Utilizador',
+          'photoUrl': user.photoURL ?? '',
+          'provider': 'github',
+        },
+        SetOptions(merge: true),
+      );
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.code);
+    }catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
  //Erros
  
 }
